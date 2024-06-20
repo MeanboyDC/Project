@@ -6,10 +6,13 @@ const selectBook = async(req, res)=>{
                   
 
         const userId = req.user?.id;
+        
+        
         console.log(userId, "User ID")
         
         
-        const BookData = {...req.body, createdBy: userId}
+        const BookData = {title: req.title, author: req.author, publishedYear: req.publishedYear, createdBy: userId}
+        
         const book = await Select.create(BookData)
         res.status(200).json(book)
     }catch(error){
@@ -38,10 +41,25 @@ const showBooks = async(req, res)=>{
         res.status(500).json({message: error.message})
     }
 }
+
+const showBook = async(req, res)=>{
+    try{
+        const {id} = req.params;
+        const book = await Select.findById(id)
+        if(!book){
+            return res.status(404).json({message: "Book not found"})
+        }
+        res.status(200).json({book, message: "successfully"})
+        }catch(error){
+        res.status(500).json({message: error.message})
+    }
+}
+
+
 const deleteBook = async(req, res)=>{
     try{  
         const {id} = req.params;
-        const book = await Book.findByIdAndDelete(id)
+        const book = await Select.findByIdAndDelete(id)
         if(!book){
             return res.status(404).json({message: "Book not found"})
         }
@@ -65,4 +83,4 @@ const verifyJWT = (req, res, next)=>{
     }
 }
 
-module.exports = {selectBook, showBooks, deleteBook, verifyJWT}
+module.exports = {selectBook, showBooks, showBook, deleteBook, verifyJWT}
