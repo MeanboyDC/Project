@@ -1,12 +1,12 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const UserRouter = require('../backend/routes/user.route.js')
-const UserMod = require('../backend/models/authmodel.js')
+const UserRouter = require('./routes/user.route.js')
+const UserMod = require('./models/authmodel.js')
 
-const Router = require('../backend/routes/book.route.js')
+const Router = require('./routes/book.route.js')
 const cors = require('cors')
 const Book = require('./models/bookmodel.js')
-const SelectRouter = require('../backend/routes/select.route.js')
+const SelectRouter = require('./routes/select.route.js')
 require('dotenv').config()
 
 
