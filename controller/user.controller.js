@@ -1,8 +1,10 @@
 const UserMod = require('../models/authmodel.js')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+require('dotenv').config()
 
-const secret = "ask10_^ask"
+const secret = process.env.SECRET_KEY
+
 
 const signin = async(req, res)=>{
     try{
@@ -17,11 +19,13 @@ const signin = async(req, res)=>{
         }
 
         const payload = {userId: user._id}
+        const admin = user.admin
         
         const token = jwt.sign(payload, secret, {expiresIn: '1h'})
         
         return    res.json({message: 'Successful login',
                             token: token,
+                            admin: admin,
             
         })
                 

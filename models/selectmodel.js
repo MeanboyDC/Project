@@ -1,35 +1,48 @@
 const { Timestamp } = require('mongodb')
 const mongoose = require('mongoose')
 
-const selectSchema = mongoose.Schema({
 
-    title:{
+
+const bookSchema = mongoose.Schema({
+    
+    title: {
         type: String,
-        require: true
+        required: true
     },
     author: {
         type: String,
-        require: true
+        required: true
     },
     publishedYear: {
         type: Number,
-        require: true
-    },
+        required: true
+    }
+}, {
+    timestamps: true
+});
+
+// const userSchema = mongoose.Schema({
+//     name: {
+//         type: String,
+//         required: true
+//     },
+//     // Add other user-related fields as needed
+// }, {
+//     timestamps: true
+// });
+
+const SelectSchema = mongoose.Schema({
+    books: [bookSchema], // Embedding multiple books within an array
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        require: true
+        required: true
     }
-    
-        
-},
-{
+}, {
     timestamps: true
-}
+});
 
-);
+// const User = mongoose.model('User', userSchema);
+const Select = mongoose.model('Select', SelectSchema);
 
-
-
-const Select = mongoose.model('Select', selectSchema);;
-module.exports = Select
+module.exports =  Select

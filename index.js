@@ -7,6 +7,14 @@ const Router = require('../backend/routes/book.route.js')
 const cors = require('cors')
 const Book = require('./models/bookmodel.js')
 const SelectRouter = require('../backend/routes/select.route.js')
+require('dotenv').config()
+
+
+const user = process.env.USER_ROUTE
+const book = process.env.BOOK_ROUTE
+const select = process.env.SELECT_ROUTE
+const mongodb = process.env.MONGODB_URL
+
 
 const app = express ()
 
@@ -20,13 +28,13 @@ app.get('/', (req, res)=>{
 }
 )
 
-app.use('/api/book', Router)
+app.use(book, Router)
 // app.use('/api/book/', UserRouter)
-app.use('/auth/book', UserRouter)
-app.use('/book', SelectRouter)
+app.use(user, UserRouter)
+app.use(select, SelectRouter)
 
 
-mongoose.connect("mongodb+srv://adebow23:RzZrCXxDEvVulFh8@cluster0.59lumdk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect(mongodb)
 .then(()=>{
     console.log('Connection Successful')
     app.listen(3001, (req, res)=>{
