@@ -11,4 +11,4 @@ const logg = process.env.LOGIN_LINK
 router.post(regg, signup)
 router.post(logg, signin)
 
-module.exports = Router;
+module.exports = router;
